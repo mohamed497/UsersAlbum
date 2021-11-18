@@ -1,4 +1,4 @@
-package com.example.usersalbum.ui
+package com.example.usersalbum.ui.albums
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
@@ -9,7 +9,6 @@ import com.example.usersalbum.base.Resource
 import com.example.usersalbum.repository.UserRepositoryImpl
 import com.example.usersalbum.repository.cache.UsersDao
 import com.example.usersalbum.repository.cache.UsersDatabase
-import com.example.usersalbum.ui.adapter.AlbumsAdapter
 import com.example.usersalbum.viewmodel.UsersViewModel
 import com.example.usersalbum.viewmodel.UsersViewModelFactory
 import kotlinx.android.synthetic.main.activity_albums.*
@@ -34,7 +33,8 @@ class AlbumsActivity : AppCompatActivity() {
             ViewModelProvider(this, UsersViewModelFactory(UserRepositoryImpl(dao)))
                 .get(UsersViewModel::class.java)
     }
-    private fun getAlbumData(){
+
+    private fun getAlbumData() {
         viewModel.getAlbumsForAllUsers()
         viewModel.getAlbumsFromCache()
     }

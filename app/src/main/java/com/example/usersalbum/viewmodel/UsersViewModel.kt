@@ -16,9 +16,6 @@ import io.reactivex.rxjava3.schedulers.Schedulers
 
 class UsersViewModel(private val userRepositoryImpl: UserRepositoryImpl) : ViewModel() {
     private val compositeDisposable = CompositeDisposable()
-    private val albums = MutableLiveData<List<Album>>()
-     val albumsLiveData : LiveData<List<Album>>
-     get() = albums
 
     private val albumsMutableLiveData = MutableLiveData<Resource<List<Album>>>()
 
@@ -29,7 +26,9 @@ class UsersViewModel(private val userRepositoryImpl: UserRepositoryImpl) : ViewM
     private fun getSingleAlbum(user: User): Observable<List<Album>> {
         return userRepositoryImpl.getAlbums(user.id)
     }
-    fun getAlbumsUsingZip2() {
+
+
+    fun getAlbumsUsingZip() {
         userRepositoryImpl.getUsers()
             .flatMap { users ->
                 val album = users.map(::getSingleAlbum)
@@ -44,7 +43,7 @@ class UsersViewModel(private val userRepositoryImpl: UserRepositoryImpl) : ViewM
             }.subscribeOn(Schedulers.io())
             .observeOn(AndroidSchedulers.mainThread())
             .subscribeBy(onNext = { albumsList ->
-                albums.value = albumsList
+                albumsMutableLiveData.value = Resource.success(albumsList)
             },
                 onError = { throwable ->
                     Log.d(Constants.VIEW_MODEL_ERROR, throwable.toString())
@@ -55,33 +54,6 @@ class UsersViewModel(private val userRepositoryImpl: UserRepositoryImpl) : ViewM
             }
 
     }
-//
-//    fun getAlbumsUsingZip() {
-//        userRepositoryImpl.getUsers()
-//            .flatMap { users ->
-//                val album = users.map(::getSingleAlbum)
-//                return@flatMap Observable.just(album)
-//            }.flatMap { allAlbums ->
-//                return@flatMap Observable.create<List<Album>> { emitter ->
-//                    allAlbums.zip { albumsUser ->
-//                        emitter.onNext(albumsUser.flatten())
-//
-//                    }
-//                }
-//            }.subscribeOn(Schedulers.io())
-//            .observeOn(AndroidSchedulers.mainThread())
-//            .subscribeBy(onNext = { albumsList ->
-//                albums.value = albumsList
-//            },
-//                onError = { throwable ->
-//                    Log.d(Constants.VIEW_MODEL_ERROR, throwable.toString())
-//                },
-//                onComplete = { Log.d(Constants.VIEW_MODEL_SUCCESS, "Albums_CompleteD") })
-//            .let { disposable ->
-//                compositeDisposable.add(disposable)
-//            }
-//
-//    }
 
     fun getAlbumsForAllUsers() {
         userRepositoryImpl.getUsers()
@@ -125,7 +97,7 @@ class UsersViewModel(private val userRepositoryImpl: UserRepositoryImpl) : ViewM
         userRepositoryImpl.getSavedAlbums().subscribeOn(Schedulers.io())
             .observeOn(AndroidSchedulers.mainThread())
             .subscribeBy(onNext = { albumsList ->
-                albumsMutableLiveData.postValue(Resource.success(albumsList))
+                albumsMutableLiveData.value = Resource.success(albumsList)
             },
                 onError = { throwable ->
                     albumsMutableLiveData.value = Resource.error(throwable)

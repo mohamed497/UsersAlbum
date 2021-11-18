@@ -1,4 +1,4 @@
-package com.example.usersalbum.ui.adapter
+package com.example.usersalbum.ui.albums
 
 import android.view.LayoutInflater
 import android.view.View
