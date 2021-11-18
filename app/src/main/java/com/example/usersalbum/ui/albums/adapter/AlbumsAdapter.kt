@@ -1,4 +1,4 @@
-package com.example.usersalbum.ui.albums
+package com.example.usersalbum.ui.albums.adapter
 
 import android.view.LayoutInflater
 import android.view.View
@@ -18,7 +18,7 @@ class AlbumsAdapter :
     }
 
     class UserViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
-        val name: TextView = itemView.userId
+        val id: TextView = itemView.userId
         val title: TextView = itemView.albumTitle
 
     }
@@ -34,7 +34,7 @@ class AlbumsAdapter :
     override fun onBindViewHolder(holder: UserViewHolder, position: Int) {
         val currentItem = albumsList[position]
         holder.title.text = currentItem.title
-        holder.name.text = currentItem.userId.toString()
+        holder.id.text = currentItem.userId.toString()
     }
 
     override fun getItemCount(): Int {

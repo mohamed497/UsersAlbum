@@ -1,26 +1,29 @@
 package com.example.usersalbum.base
 
 
-class Resource<T> (
+class Resource<T>(
     val value: T? = null,
     val t: Throwable? = null,
     val state: State,
 
-        ){
-    companion object{
-        enum class State{
+    ) {
+    companion object {
+        enum class State {
             LOADING,
             ERROR,
             SUCCESS
         }
-        fun <T> loading(): Resource<T>{
+
+        fun <T> loading(): Resource<T> {
             return Resource(state = State.LOADING)
         }
-        fun <T> success(value: T): Resource<T>{
+
+        fun <T> success(value: T): Resource<T> {
             return Resource(state = State.SUCCESS, value = value)
         }
-        fun <T> error(t: Throwable): Resource<T>{
-            return Resource(state = State.ERROR, t= t)
+
+        fun <T> error(t: Throwable): Resource<T> {
+            return Resource(state = State.ERROR, t = t)
         }
     }
 

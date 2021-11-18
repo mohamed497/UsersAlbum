@@ -14,7 +14,8 @@ import io.reactivex.rxjava3.kotlin.subscribeBy
 import io.reactivex.rxjava3.kotlin.zip
 import io.reactivex.rxjava3.schedulers.Schedulers
 
-class UsersViewModel(private val userRepositoryImpl: UserRepositoryImpl) : ViewModel() {
+class UsersViewModel : ViewModel() {
+    private val userRepositoryImpl = UserRepositoryImpl()
     private val compositeDisposable = CompositeDisposable()
 
     private val albumsMutableLiveData = MutableLiveData<Resource<List<Album>>>()
@@ -38,55 +39,20 @@ class UsersViewModel(private val userRepositoryImpl: UserRepositoryImpl) : ViewM
                     allAlbums.zip { albumsUser ->
                         emitter.onNext(albumsUser.flatten())
 
-                    }
+                    }.subscribeOn(Schedulers.io())
+                        .subscribe()
                 }
             }.subscribeOn(Schedulers.io())
             .observeOn(AndroidSchedulers.mainThread())
             .subscribeBy(onNext = { albumsList ->
-                albumsMutableLiveData.value = Resource.success(albumsList)
+                insertAlbums(albumsList)
+
             },
                 onError = { throwable ->
                     Log.d(Constants.VIEW_MODEL_ERROR, throwable.toString())
                 },
                 onComplete = { Log.d(Constants.VIEW_MODEL_SUCCESS, "Albums_CompleteD") })
             .let { disposable ->
-                compositeDisposable.add(disposable)
-            }
-
-    }
-
-    fun getAlbumsForAllUsers() {
-        userRepositoryImpl.getUsers()
-            .flatMap { users ->
-                val albums = users.map(::getSingleAlbum)
-                return@flatMap Observable.just(albums)
-            }
-            .flatMapIterable { observableList ->
-                return@flatMapIterable observableList
-            }
-            .flatMap { albumsObservable ->
-                return@flatMap albumsObservable
-            }
-            .toList()
-            .toObservable()
-            .flatMap { albums ->
-                val getAllAlbumsList = albums.flatten()
-                return@flatMap Observable.just(getAllAlbumsList)
-            }
-            .subscribeOn(Schedulers.io())
-            .observeOn(AndroidSchedulers.mainThread())
-            .subscribeBy(onNext = { albumsList ->
-                insertAlbums(albumsList)
-            },
-                onError = { throwable ->
-                    Log.d(Constants.VIEW_MODEL_ERROR, throwable.toString())
-                },
-                onComplete = {
-                    Log.d(
-                        Constants.VIEW_MODEL_SUCCESS,
-                        "Fetch Data From DB Completed"
-                    )
-                }).let { disposable ->
                 compositeDisposable.add(disposable)
             }
 
