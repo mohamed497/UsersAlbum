@@ -1,6 +1,7 @@
 // Top-level build file where you can add configuration options common to all sub-projects/modules.
 buildscript {
     ext {
+        version_junit = "4.+"
         version_retrofit = "2.9.0"
         version_core = "1.7.0"
         version_rxjava = "3.0.0"

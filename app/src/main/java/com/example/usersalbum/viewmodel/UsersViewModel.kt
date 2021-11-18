@@ -58,7 +58,6 @@ class UsersViewModel(private val userRepositoryImpl: UserRepositoryImpl) : ViewM
 
     }
 
-
     fun getAlbumsForAllUsers() {
         userRepositoryImpl.getUsers()
             .flatMap { users ->

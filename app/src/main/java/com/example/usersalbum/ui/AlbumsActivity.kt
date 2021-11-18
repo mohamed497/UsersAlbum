@@ -25,9 +25,7 @@ class AlbumsActivity : AppCompatActivity() {
         setContentView(R.layout.activity_albums)
         initDatabaseDao()
         initViewModel()
-
-        viewModel.getAlbumsForAllUsers()
-        viewModel.getAlbumsFromCache()
+        getAlbumData()
         observeOnAlbums()
     }
 
@@ -35,6 +33,10 @@ class AlbumsActivity : AppCompatActivity() {
         viewModel =
             ViewModelProvider(this, UsersViewModelFactory(UserRepositoryImpl(dao)))
                 .get(UsersViewModel::class.java)
+    }
+    private fun getAlbumData(){
+        viewModel.getAlbumsForAllUsers()
+        viewModel.getAlbumsFromCache()
     }
 
     private fun initDatabaseDao() {

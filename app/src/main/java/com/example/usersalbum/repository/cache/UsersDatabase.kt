@@ -6,7 +6,6 @@ import androidx.room.Room
 import androidx.room.RoomDatabase
 import com.example.usersalbum.base.Constants
 import com.example.usersalbum.models.Album
-import com.example.usersalbum.models.User
 
 @Database(entities = [Album::class], version = Constants.DB_VERSION, exportSchema = false)
 abstract class UsersDatabase : RoomDatabase() {

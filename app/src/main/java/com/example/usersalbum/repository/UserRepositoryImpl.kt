@@ -8,7 +8,7 @@ import com.example.usersalbum.repository.remote.UsersRemoteRepository
 import io.reactivex.rxjava3.core.Completable
 import io.reactivex.rxjava3.core.Observable
 
-class UserRepositoryImpl(private val usersDao: UsersDao ) : UserRepository {
+class UserRepositoryImpl(private val usersDao: UsersDao) : UserRepository {
 
     private val cacheRepo: UserRepository = UsersCacheRepository(usersDao)
     private val remoteRepo: UserRepository = UsersRemoteRepository()
@@ -17,7 +17,6 @@ class UserRepositoryImpl(private val usersDao: UsersDao ) : UserRepository {
     override fun getUsers(): Observable<List<User>> {
         return remoteRepo.getUsers()
             .flatMap { users ->
-//                saveUsers(users)
                 return@flatMap Observable.just(users)
             }
     }
@@ -31,14 +30,6 @@ class UserRepositoryImpl(private val usersDao: UsersDao ) : UserRepository {
     }
 
 
-//    override fun saveUser(user: User): Completable {
-//        return cacheRepo.saveUser(user)
-//    }
-
-    //    override fun saveUsers(users: List<User>): Completable {
-//        return cacheRepo.saveUsers(users)
-//    }
-//
     override fun getSavedAlbums(): Observable<List<Album>> {
         return cacheRepo.getSavedAlbums()
     }

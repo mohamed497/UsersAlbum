@@ -21,8 +21,6 @@ interface UsersRetrofitService{
     @GET("users")
     fun getUpdatedTopUsers(): Observable<List<User>>
 
-//    @GET()
-//    fun getUserById(id: Int): Observable<User>
     @GET("albums")
     fun getAlbums(@Query("userId") userId: Int): Observable<List<Album>>
 }

@@ -7,11 +7,8 @@ import io.reactivex.rxjava3.core.Observable
 
 interface UserRepository {
     fun getUsers(): Observable<List<User>>
-//    fun getUserById(id: Int): Observable<User>
     fun getAlbums(userId: Int): Observable<List<Album>>
     fun saveAlbums(albums: List<Album>): Completable
-//    fun saveUser(user: User): Completable
-//    fun saveUsers(users: List<User>): Completable
     fun getSavedAlbums(): Observable<List<Album>>
 
 }

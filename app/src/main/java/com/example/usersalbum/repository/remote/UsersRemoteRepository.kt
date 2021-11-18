@@ -9,7 +9,7 @@ import retrofit2.Retrofit
 import retrofit2.adapter.rxjava3.RxJava3CallAdapterFactory
 import retrofit2.converter.gson.GsonConverterFactory
 
-class UsersRemoteRepository: UserRepository{
+class UsersRemoteRepository : UserRepository {
 
     private val userService = UsersService.retrofitService
 
@@ -24,17 +24,9 @@ class UsersRemoteRepository: UserRepository{
     override fun saveAlbums(albums: List<Album>): Completable {
         throw UnsupportedOperationException("You can not save user in Remote layer")
     }
+
     override fun getSavedAlbums(): Observable<List<Album>> {
         throw UnsupportedOperationException("You can not get saved users in Remote layer")
     }
-
-//    override fun saveUser(user: User): Completable {
-//        throw UnsupportedOperationException("You can not save user in Remote layer")
-//    }
-
-//    override fun saveUsers(users: List<User>): Completable {
-//        throw UnsupportedOperationException("You can not save users in Remote layer")
-//    }
-//
 
 }

@@ -9,14 +9,14 @@ import com.example.usersalbum.R
 import com.example.usersalbum.models.Album
 import kotlinx.android.synthetic.main.list_users_item.view.*
 
-//class AlbumsAdapter(private val albumsModel: List<Album>) :
 class AlbumsAdapter :
     RecyclerView.Adapter<AlbumsAdapter.UserViewHolder>() {
 
     private var albumsList = ArrayList<Album>()
-    fun setAlbums(albumList: List<Album>){
+    fun setAlbums(albumList: List<Album>) {
         this.albumsList.addAll(albumList)
     }
+
     class UserViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
         val name: TextView = itemView.userId
         val title: TextView = itemView.albumTitle
