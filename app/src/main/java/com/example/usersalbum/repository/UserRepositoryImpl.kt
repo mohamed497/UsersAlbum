@@ -8,7 +8,7 @@ import com.example.usersalbum.repository.remote.UsersRemoteRepository
 import io.reactivex.rxjava3.core.Completable
 import io.reactivex.rxjava3.core.Observable
 
-class UserRepositoryImpl(private val usersDao: UsersDao) : UserRepository {
+class UserRepositoryImpl(usersDao: UsersDao) : UserRepository {
 
     private val cacheRepo: UserRepository = UsersCacheRepository(usersDao)
     private val remoteRepo: UserRepository = UsersRemoteRepository()
