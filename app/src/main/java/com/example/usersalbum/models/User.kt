@@ -1,5 +1,8 @@
 package com.example.usersalbum.models
 
+import android.os.Parcelable
+import kotlinx.android.parcel.Parcelize
+
 
 data class User(
     val id: Int,

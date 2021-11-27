@@ -15,6 +15,7 @@ class AlbumsAdapter :
     private var albumsList = ArrayList<Album>()
     fun setAlbums(albumList: List<Album>) {
         this.albumsList.addAll(albumList)
+        notifyDataSetChanged()
     }
 
     class UserViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {

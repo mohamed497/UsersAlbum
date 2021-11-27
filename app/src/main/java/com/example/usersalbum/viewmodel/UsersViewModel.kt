@@ -1,5 +1,7 @@
 package com.example.usersalbum.viewmodel
 
+import android.os.Bundle
+import android.os.Parcelable
 import android.util.Log
 import androidx.lifecycle.*
 import com.example.usersalbum.base.Constants
@@ -20,9 +22,11 @@ class UsersViewModel : ViewModel() {
 
     private val albumsMutableLiveData = MutableLiveData<Resource<List<Album>>>()
 
+
     fun observeOnAlbums(lifecycle: LifecycleOwner, albums: Observer<Resource<List<Album>>>) {
         albumsMutableLiveData.observe(lifecycle, albums)
     }
+
 
     private fun getSingleAlbum(user: User): Observable<List<Album>> {
         return userRepositoryImpl.getAlbums(user.id)
